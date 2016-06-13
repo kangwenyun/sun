@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -16,7 +17,7 @@ import com.sun.app.sun.R;
 import com.sun.app.sun.model.City;
 import com.sun.app.sun.model.County;
 import com.sun.app.sun.model.Province;
-import com.sun.app.sun.model.SunDB;
+import com.sun.app.sun.db.SunDB;
 import com.sun.app.sun.util.HttpCallBackListener;
 import com.sun.app.sun.util.HttpUtil;
 import com.sun.app.sun.util.Utility;
@@ -131,30 +132,33 @@ public class ChooseAreaActivity extends Activity {
             @Override
             public void onFinish(String response) {
                 boolean result = false;
-                if("province".equals(type)){
-                    result = Utility.handleProvinceResponse(sunDB,response);
-                }else if("city".equals(type)){
-                    result = Utility.handleCitiesResponse(sunDB,response,selectedProvince.getId());
-                }else if("county".equals(type)){
-                    result = Utility.handleCountyResponse(sunDB,response,selectedCity.getId());
+                if ("province".equals(type)) {
+                    result = Utility.handleProvinceResponse(sunDB, response);
+                } else if ("city".equals(type)) {
+                    result = Utility.handleCitiesResponse(sunDB, response, selectedProvince.getId());
+                } else if ("county".equals(type)) {
+                    result = Utility.handleCountyResponse(sunDB, response, selectedCity.getId());
                 }
-                if(result){
+                if (result) {
                     //通过runOnUiThread()方法实现从子线程切换到主线程，回到主线程处理逻辑
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            Log.d("ChooseAreaActivity", "147");
                             closeProgressDialog();
-                            if("province".equals(type)){
+                            Log.d("ChooseAreaActivity", "149");
+                            if ("province".equals(type)) {
                                 queryProvinces();
-                            }else if("city".equals(type)){
+                            } else if ("city".equals(type)) {
                                 queryCities();
-                            }else if("county".equals(type)){
+                            } else if ("county".equals(type)) {
                                 queryCounties();
                             }
                         }
                     });
                 }
             }
+
             @Override
             public void onError(Exception e) {
                 //通过runOnUiThread()方法回到主线程处理逻辑
@@ -162,12 +166,11 @@ public class ChooseAreaActivity extends Activity {
                     @Override
                     public void run() {
                         closeProgressDialog();
-                        Toast.makeText(ChooseAreaActivity.this,"加载失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChooseAreaActivity.this, "加载失败", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
-
     }
     //显示进度对话框
     private void showProgressDialog(){
@@ -185,7 +188,6 @@ public class ChooseAreaActivity extends Activity {
         }
     }
     //捕获Back按键，根据当前的级别来判断，此时应该返回市列表，省列表，还是直接退出
-
     @Override
     public void onBackPressed() {
         if(currentLevel == LEVEL_COUNTY){

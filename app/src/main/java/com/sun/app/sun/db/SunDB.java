@@ -1,10 +1,14 @@
-package com.sun.app.sun.model;
+package com.sun.app.sun.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.sun.app.sun.db.SunOpenHelper;
+
+import com.sun.app.sun.model.City;
+import com.sun.app.sun.model.County;
+import com.sun.app.sun.model.Province;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -84,8 +88,8 @@ public class SunDB {
         }
         return list ;
     }
-    //将Country实例存储到数据库
-    public void saveCountry(County county){
+    //将County实例存储到数据库
+    public void saveCounty(County county){
         if(county != null){
             ContentValues values = new ContentValues();
             values.put("county_name",county.getCountyName());
@@ -103,8 +107,9 @@ public class SunDB {
                 County county = new County();
                 county.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 county.setCountyName(cursor.getString(cursor.getColumnIndex("county_name")));
-                county.setCountyCode(cursor.getString(cursor.getColumnIndex("country_code")));
-                county.setId(cityId);
+                county.setCountyCode(cursor.getString(cursor.getColumnIndex("county_code")));
+                county.setCityId(cityId);
+                list.add(county);
             }while(cursor.moveToNext());
         }
         if(cursor != null){

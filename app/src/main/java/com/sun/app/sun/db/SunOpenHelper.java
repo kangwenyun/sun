@@ -24,7 +24,7 @@ public class SunOpenHelper extends SQLiteOpenHelper {
             + "city_code text, "
             + "province_id intrger) ";
     /**
-     * Country表建表语句
+     * County表建表语句
      */
     public static final String CREATE_COUNTY = "create table County ("
             + "id integer primary key autoincrement, "
@@ -39,7 +39,7 @@ public class SunOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_PROVINCE);//创建province表
         db.execSQL(CREATE_CITY);//创建city表
-        db.execSQL(CREATE_COUNTY);//创建country表
+        db.execSQL(CREATE_COUNTY);//创建county表
     }
 
     @Override
