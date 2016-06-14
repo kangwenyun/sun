@@ -106,9 +106,9 @@ public class WeatherActivity extends Activity {
         cityNameText.setText(prefs.getString("city_name",""));
         temp1Text.setText(prefs.getString("temp1",""));
         temp2Text.setText(prefs.getString("temp2",""));
-        weatherDespText.setText(prefs.getString("weather_desp",""));
+        weatherDespText.setText(prefs.getString("weather_desp","无"));
         publishText.setText("今天" + prefs.getString("publish_time","") + "发布");
-        currentDateText.setText(prefs.getString("current_data",""));
+        currentDateText.setText(prefs.getString("current_date",""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
     }
